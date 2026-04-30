@@ -1,0 +1,203 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX_LIVROS 100
+#define MAX_SEBOS 10
+
+typedef struct {
+    char titulo[100];
+    char autor[100];    
+    char genero[50];
+    char estado[50];
+    float preco;
+} Livro;
+
+typedef struct {
+    char nome[100];
+    char endereco[150];
+    char horario[100];
+    Livro livros[MAX_LIVROS];
+    int totalLivros;
+} Sebo;
+
+Sebo sebos[MAX_SEBOS];
+int totalSebos = 0;
+
+void cadastrarSebo() {
+    int opcao;
+
+    do {
+        printf("\n=== CADASTRO DE SEBO ===\n");
+        printf("1 - Novo cadastro\n");
+        printf("0 - Voltar\n");
+        printf("Escolha: ");
+        scanf("%d", &opcao);
+
+        if (opcao == 1) {
+            if (totalSebos >= MAX_SEBOS) {
+                printf("Limite de sebos atingido!\n");
+                continue;
+            }
+
+            Sebo novo;
+
+            printf("Nome do sebo: ");
+            scanf(" %[^\n]", novo.nome);
+
+            printf("Endereço: ");
+            scanf(" %[^\n]", novo.endereco);
+
+            printf("Horário: ");
+            scanf(" %[^\n]", novo.horario);
+
+            novo.totalLivros = 0;
+
+            sebos[totalSebos++] = novo;
+
+            printf("Sebo cadastrado com sucesso!\n");
+        }
+
+    } while (opcao != 0);
+}
+
+void cadastrarLivro() {
+    int opcao;
+
+    do {
+        printf("\n=== CADASTRO DE LIVRO ===\n");
+        printf("1 - Novo livro\n");
+        printf("0 - Voltar\n");
+        printf("Escolha: ");
+        scanf("%d", &opcao);
+
+        if (opcao == 1) {
+            if (totalSebos == 0) {
+                printf("Nenhum sebo cadastrado!\n");
+                continue;
+            }
+
+            printf("\nSebos disponíveis:\n");
+            for (int i = 0; i < totalSebos; i++) {
+                printf("%d - %s\n", i, sebos[i].nome);
+            }
+
+            int id;
+            printf("Escolha o sebo: ");
+            scanf("%d", &id);
+
+            if (id < 0 || id >= totalSebos) {
+                printf("Sebo inválido!\n");
+                continue;
+            }
+
+            Sebo *s = &sebos[id];
+
+            if (s->totalLivros >= MAX_LIVROS) {
+                printf("Limite de livros atingido!\n");
+                continue;
+            }
+
+            Livro novo;
+
+            printf("Título: ");
+            scanf(" %[^\n]", novo.titulo);
+
+            printf("Autor: ");
+            scanf(" %[^\n]", novo.autor);
+
+            printf("Gênero: ");
+            scanf(" %[^\n]", novo.genero);
+
+            printf("Estado: ");
+            scanf(" %[^\n]", novo.estado);
+
+            printf("Preço: ");
+            scanf("%f", &novo.preco);
+
+            s->livros[s->totalLivros++] = novo;
+
+            printf("Livro cadastrado com sucesso!\n");
+        }
+
+    } while (opcao != 0);
+}
+
+void listarSebos() {
+    if (totalSebos == 0) {
+        printf("Nenhum sebo cadastrado.\n");
+        return;
+    }
+
+    for (int i = 0; i < totalSebos; i++) {
+        printf("\n=== SEBO %d ===\n", i);
+        printf("Nome: %s\n", sebos[i].nome);
+        printf("Endereço: %s\n", sebos[i].endereco);
+        printf("Horário: %s\n", sebos[i].horario);
+
+        if (sebos[i].totalLivros == 0) {
+            printf("Nenhum livro cadastrado.\n");
+        } else {
+            for (int j = 0; j < sebos[i].totalLivros; j++) {
+                Livro l = sebos[i].livros[j];
+                printf("\nLivro %d:\n", j);
+                printf("Título: %s\n", l.titulo);
+                printf("Autor: %s\n", l.autor);
+                printf("Gênero: %s\n", l.genero);
+                printf("Estado: %s\n", l.estado);
+                printf("Preço: R$ %.2f\n", l.preco);
+            }
+        }
+    }
+}
+
+void buscarLivro() {
+    char busca[100];
+
+    printf("Digite o título: ");
+    scanf(" %[^\n]", busca);
+
+    int encontrou = 0;
+
+    for (int i = 0; i < totalSebos; i++) {
+        for (int j = 0; j < sebos[i].totalLivros; j++) {
+            if (strstr(sebos[i].livros[j].titulo, busca)) {
+                printf("\nEncontrado no sebo: %s\n", sebos[i].nome);
+                printf("Livro: %s\n", sebos[i].livros[j].titulo);
+                printf("Autor: %s\n", sebos[i].livros[j].autor);
+                encontrou = 1;
+            }
+        }
+    }
+
+    if (!encontrou) {
+        printf("Nenhum livro encontrado.\n");
+    }
+}
+
+int main() {
+    int opcao;
+
+    do {
+        printf("\n===== BOOKCYCLE =====\n");
+        printf("1 - Cadastrar Sebo\n");
+        printf("2 - Cadastrar Livro\n");
+        printf("3 - Listar Sebos\n");
+        printf("4 - Buscar Livro\n");
+        printf("0 - Sair\n");
+        printf("Escolha: ");
+        scanf("%d", &opcao);
+
+        switch (opcao) {
+            case 1: cadastrarSebo(); break;
+            case 2: cadastrarLivro(); break;
+            case 3: listarSebos(); break;
+            case 4: buscarLivro(); break;
+            case 0: printf("Saindo...\n"); break;
+            default: printf("Opção inválida!\n");
+        }
+
+    } while (opcao != 0);
+
+    return 0;
+}
