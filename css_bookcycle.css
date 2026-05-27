@@ -1,0 +1,473 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    /* COR DE FUNDO SÓLIDA (caso a imagem seja transparente) */
+    background-color: #f9f0b7;
+    /* IMAGEM DE FUNDO */
+    background-image: url('imagem-2.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    /* IMPORTANTE: permite a cor aparecer onde a imagem é transparente */
+    background-blend-mode: normal;
+}
+
+/* Overlay para garantir legibilidade do texto */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(249, 240, 183, 0.75);
+    z-index: -1;
+    pointer-events: none;
+}
+
+.top-bar {
+    background-color: #e3d49c;
+    padding: 1.248rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2.4rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo img {
+    height: 78px;
+    width: auto;
+    display: block;
+    object-fit: contain;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2.808rem;
+    flex-wrap: wrap;
+    list-style: none;
+    justify-content: center;
+}
+
+.nav-links a {
+    text-decoration: none;
+    font-weight: 500;
+    color: #3a3a3a;
+    font-size: 1.56rem;
+    transition: all 0.2s ease;
+    padding-bottom: 7.2px;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    border-bottom-color: #8b7a4a;
+    color: #2c2c2c;
+    font-weight: 700;
+}
+
+.shadow-bar {
+    background: linear-gradient(to bottom, #8a6f52 0%, #9a7d5d 20%, #b09675 50%, #c4ae91 75%, #d9c8b4 100%);
+    height: 33.6px;
+    width: 100%;
+}
+
+.search-container {
+    display: flex;
+    justify-content: center;
+    padding: 2rem 2rem 1rem 2rem;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    max-width: 600px;
+    width: 100%;
+    background-color: white;
+    border: 2px solid #d4c48a;
+    border-radius: 50px;
+    overflow: hidden;
+}
+
+.search-input {
+    flex: 1;
+    padding: 14px 0;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    padding-left: 15px;
+}
+
+.search-button {
+    background-color: #e3d49c;
+    border: none;
+    padding: 14px 24px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #3a3a3a;
+}
+
+.search-button:hover {
+    background-color: #d4c48a;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    margin-bottom: 1rem;
+}
+
+.page {
+    display: none;
+}
+
+.page.active-page {
+    display: block;
+}
+
+.frase-destaque {
+    background-color: #e1d698;
+    padding: 2rem;
+    border-radius: 24px;
+    text-align: center;
+    font-style: italic;
+    margin: 0 0 2rem 0;
+    border-left: 5px solid #b09675;
+    border-right: 5px solid #b09675;
+    font-size: 1.2rem;
+}
+
+.section-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #3a3a3a;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 3px solid #e3d49c;
+    display: inline-block;
+}
+
+.books-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.book-card,
+.sebo-card {
+    background-color: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s;
+    position: relative;
+}
+
+.book-card {
+    padding: 1rem;
+}
+
+.book-card:hover,
+.sebo-card:hover {
+    transform: translateY(-4px);
+}
+
+.sebo-card {
+    padding: 0;
+}
+
+.sebo-image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.sebo-info {
+    padding: 1rem;
+}
+
+.book-title {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #3a3a3a;
+    margin-bottom: 0.25rem;
+}
+
+.book-author {
+    font-size: 0.85rem;
+    color: #888;
+    margin-bottom: 0.5rem;
+}
+
+.book-price {
+    font-weight: 700;
+    color: #b09675;
+    font-size: 1.1rem;
+    margin-top: 0.5rem;
+}
+
+.original-price {
+    text-decoration: line-through;
+    color: #999;
+    font-size: 0.85rem;
+    margin-right: 8px;
+}
+
+.discount-badge {
+    background-color: #ff6b6b;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    margin-left: 8px;
+}
+
+.badge {
+    background: #e3d49c;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    display: inline-block;
+    margin-right: 6px;
+    margin-top: 8px;
+}
+
+.filter-section {
+    background: #e1d698;
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.filter-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+
+.filter-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.chip {
+    background: #f8efb6;
+    padding: 6px 18px;
+    border-radius: 30px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+    display: inline-block;
+}
+
+.chip:hover,
+.chip.active {
+    background: #e3d49c;
+}
+
+.load-more-btn {
+    background: #e3d49c;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: block;
+    margin: 20px auto;
+    width: fit-content;
+}
+
+.load-more-btn:hover {
+    background: #d4c48a;
+    transform: scale(1.02);
+}
+
+.main-layout {
+    display: flex;
+    gap: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem 2rem 2rem;
+}
+
+.filters-sidebar {
+    width: 280px;
+    flex-shrink: 0;
+}
+
+.content-area {
+    flex: 1;
+}
+
+.footer {
+    background-color: #e1d698;
+    padding: 2rem;
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.footer p {
+    margin: 0.5rem 0;
+    color: #3a3a3a;
+}
+
+/* Estilos para o temporizador */
+.timer-container {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 12px;
+    border-radius: 12px;
+    margin-top: 12px;
+    text-align: center;
+}
+
+.timer-label {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.8);
+    display: block;
+    margin-bottom: 5px;
+}
+
+.timer-display {
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    font-family: monospace;
+    letter-spacing: 2px;
+}
+
+.timer-expired {
+    background: #ff6b6b;
+    color: white;
+    padding: 8px;
+    border-radius: 8px;
+    font-size: 12px;
+    text-align: center;
+}
+
+.buy-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 8px;
+    width: 100%;
+}
+
+.buy-button:hover {
+    background-color: #45a049;
+}
+
+.buy-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Estilos para capas dos livros */
+.book-cover {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    background-color: #f0e6d2;
+    display: block;
+}
+
+.book-cover-placeholder {
+    width: 100%;
+    height: 250px;
+    background: linear-gradient(135deg, #e3d49c 0%, #c4ae91 100%);
+    border-radius: 8px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 64px;
+}
+
+/* Estilos para botão de favoritar */
+.favorite-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: white;
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s;
+    z-index: 10;
+}
+
+.favorite-btn:hover {
+    transform: scale(1.1);
+}
+
+.favorite-btn.favorited {
+    color: #ff4757;
+    background: white;
+}
+
+.favorite-count {
+    background: #ff6b6b;
+    color: white;
+    border-radius: 20px;
+    padding: 2px 8px;
+    font-size: 11px;
+    margin-left: 8px;
+}
+
+@media (max-width: 768px) {
+    .main-layout {
+        flex-direction: column;
+        padding: 0 1rem 1rem 1rem;
+    }
+    
+    .filters-sidebar {
+        width: 100%;
+    }
+    
+    .top-bar {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .nav-links {
+        gap: 1.2rem;
+    }
+    
+    .nav-links a {
+        font-size: 1.2rem;
+    }
+    
+    .container {
+        padding: 1rem;
+    }
+}
