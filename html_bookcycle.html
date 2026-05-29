@@ -1,154 +1,174 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BookCycle - Plataforma de Livros</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BookCycle - Plataforma de Livros</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/script.js" defer></script>
 </head>
 <body>
-    <header>
-        <div class="top-bar">
-            <div class="logo"><img src="logo.png" alt="BookCycle Logo" onerror="this.style.display='none'"></div>
-            <ul class="nav-links">
-                <li><a class="nav-tab" data-page="inicio">início</a></li>
-                <li><a class="nav-tab" data-page="livros">livros</a></li>
-                <li><a class="nav-tab" data-page="favoritos">⭐ favoritos</a></li>
-                <li><a class="nav-tab" data-page="reservas">minhas reservas</a></li>
-                <li><a class="nav-tab" data-page="sebos">sebos</a></li>
-                <li><a class="nav-tab" data-page="perfil">meu perfil</a></li>
-                <li><a class="nav-tab" data-page="sobre">sobre</a></li>
-            </ul>
-        </div>
-        <div class="shadow-bar"></div>
-        <div class="search-container">
-            <div class="search-bar">
-                <input type="text" id="searchInput" class="search-input" placeholder="Pesquisar livros, autores...">
-                <button class="search-button" id="searchBtn">Buscar</button>
+  <header class="site-header">
+    <nav class="top-bar" aria-label="Menu principal">
+      <a class="logo" href="#inicio" aria-label="Página inicial da BookCycle">
+        <img src="assets/logo.png" alt="BookCycle Logo">
+      </a>
+
+      <ul class="nav-links">
+        <li><a class="nav-tab active" href="#inicio" data-page="inicio">início</a></li>
+        <li><a class="nav-tab" href="#livros" data-page="livros">livros</a></li>
+        <li><a class="nav-tab" href="#favoritos" data-page="favoritos">favoritos <span id="menu-favoritos-count" class="favorite-count">0</span></a></li>
+        <li><a class="nav-tab" href="#reservas" data-page="reservas">minhas reservas</a></li>
+        <li><a class="nav-tab" href="#sebos" data-page="sebos">sebos</a></li>
+        <li><a class="nav-tab" href="#perfil" data-page="perfil">meu perfil</a></li>
+        <li><a class="nav-tab" href="#sobre" data-page="sobre">sobre</a></li>
+      </ul>
+    </nav>
+
+    <div class="shadow-bar" aria-hidden="true"></div>
+
+    <form class="search-container" id="searchForm" role="search">
+      <div class="search-bar">
+        <label class="sr-only" for="searchInput">Pesquisar livros ou autores</label>
+        <input type="search" id="searchInput" class="search-input" placeholder="Pesquisar livros, autores...">
+        <button class="search-button" type="submit">Buscar</button>
+      </div>
+    </form>
+  </header>
+
+  <main>
+    <section id="inicio" class="page active-page" aria-labelledby="inicio-title">
+      <div class="container">
+        <p class="frase-destaque">"A leitura é uma viagem sem fim, onde cada página é um novo mundo para explorar."</p>
+
+        <h1 id="inicio-title" class="section-title">recomendados</h1>
+        <div id="recomendados-lista" class="books-grid"></div>
+
+        <h2 class="section-title">sebos parceiros em destaque</h2>
+        <div id="sebos-destaque" class="books-grid"></div>
+      </div>
+    </section>
+
+    <section id="livros" class="page" aria-labelledby="livros-title">
+      <div class="main-layout">
+        <aside class="filters-sidebar" aria-label="Filtros do catálogo">
+          <section class="filter-section">
+            <h2 class="filter-title">Conservação</h2>
+            <div class="filter-chips">
+              <button class="chip filter-chip active" type="button" data-filtro="estado" data-valor="todos">todos</button>
+              <button class="chip filter-chip" type="button" data-filtro="estado" data-valor="novo">novo</button>
+              <button class="chip filter-chip" type="button" data-filtro="estado" data-valor="bom">bom estado</button>
+              <button class="chip filter-chip" type="button" data-filtro="estado" data-valor="regular">regular</button>
             </div>
-        </div>
-    </header>
+          </section>
 
-    <div id="page-inicio" class="page active-page">
-        <div class="container">
-            <div class="frase-destaque">📖 "A leitura é uma viagem sem fim, onde cada página é um novo mundo para explorar."</div>
-            <h2 class="section-title">📚 recomendados</h2>
-            <div id="recomendados-lista" class="books-grid"></div>
-            <h2 class="section-title">🏪 sebos parceiros em destaque</h2>
-            <div id="sebos-destaque" class="books-grid"></div>
-        </div>
-    </div>
-
-    <div id="page-livros" class="page">
-        <div class="main-layout">
-            <aside class="filters-sidebar">
-                <div class="filter-section">
-                    <h3 class="filter-title">Conservação</h3>
-                    <div class="filter-chips">
-                        <span class="chip filter-chip active" data-filtro="estado" data-valor="todos">todos</span>
-                        <span class="chip filter-chip" data-filtro="estado" data-valor="novo">novo</span>
-                        <span class="chip filter-chip" data-filtro="estado" data-valor="bom">bom estado</span>
-                        <span class="chip filter-chip" data-filtro="estado" data-valor="regular">regular</span>
-                    </div>
-                </div>
-                <div class="filter-section">
-                    <h3 class="filter-title">Gênero</h3>
-                    <div class="filter-chips">
-                        <span class="chip filter-chip active" data-filtro="genero" data-valor="todos">todos</span>
-                        <span class="chip filter-chip" data-filtro="genero" data-valor="ficcao">ficção</span>
-                        <span class="chip filter-chip" data-filtro="genero" data-valor="filosofia">filosofia</span>
-                        <span class="chip filter-chip" data-filtro="genero" data-valor="poesia">poesia</span>
-                        <span class="chip filter-chip" data-filtro="genero" data-valor="romance">romance</span>
-                        <span class="chip filter-chip" data-filtro="genero" data-valor="suspense">suspense</span>
-                        <span class="chip filter-chip" data-filtro="genero" data-valor="terror">terror</span>
-                        <span class="chip filter-chip" data-filtro="genero" data-valor="aventura">aventura</span>
-                    </div>
-                </div>
-                <div class="filter-section">
-                    <h3 class="filter-title">Preço</h3>
-                    <div class="filter-chips">
-                        <span class="chip filter-price" data-preco="ate30">até R$ 30</span>
-                        <span class="chip filter-price" data-preco="30a50">R$ 30 - R$ 50</span>
-                        <span class="chip filter-price" data-preco="50a80">R$ 50 - R$ 80</span>
-                        <span class="chip filter-price" data-preco="acima80">acima de R$ 80</span>
-                    </div>
-                </div>
-                <div class="filter-section">
-                    <h3 class="filter-title">🎯 Promoções</h3>
-                    <div class="filter-chips">
-                        <span class="chip filter-promo active" data-promo="todos">todos</span>
-                        <span class="chip filter-promo" data-promo="comdesconto">com 50% OFF</span>
-                        <span class="chip filter-promo" data-promo="semdesconto">preço normal</span>
-                    </div>
-                </div>
-            </aside>
-            <div class="content-area">
-                <h2 class="section-title">📚 catálogo de livros <span style="font-size:0.9rem;">(37 livros - 30 com 50% OFF!)</span></h2>
-                <div id="livros-lista" class="books-grid"></div>
-                <button id="loadMoreBtn" class="load-more-btn">📖 Carregar mais livros</button>
+          <section class="filter-section">
+            <h2 class="filter-title">Gênero</h2>
+            <div class="filter-chips">
+              <button class="chip filter-chip active" type="button" data-filtro="genero" data-valor="todos">todos</button>
+              <button class="chip filter-chip" type="button" data-filtro="genero" data-valor="ficcao">ficção</button>
+              <button class="chip filter-chip" type="button" data-filtro="genero" data-valor="filosofia">filosofia</button>
+              <button class="chip filter-chip" type="button" data-filtro="genero" data-valor="poesia">poesia</button>
+              <button class="chip filter-chip" type="button" data-filtro="genero" data-valor="romance">romance</button>
+              <button class="chip filter-chip" type="button" data-filtro="genero" data-valor="suspense">suspense</button>
+              <button class="chip filter-chip" type="button" data-filtro="genero" data-valor="terror">terror</button>
+              <button class="chip filter-chip" type="button" data-filtro="genero" data-valor="aventura">aventura</button>
             </div>
-        </div>
-    </div>
+          </section>
 
-    <div id="page-favoritos" class="page">
-        <div class="container">
-            <h2 class="section-title">⭐ meus livros favoritos <span id="favoritos-count" class="favorite-count">0</span></h2>
-            <div id="favoritos-lista" class="books-grid"></div>
-        </div>
-    </div>
-
-    <div id="page-reservas" class="page">
-        <div class="container">
-            <h2 class="section-title">📋 minhas reservas</h2>
-            <div id="reservas-lista" class="books-grid"></div>
-        </div>
-    </div>
-
-    <div id="page-sebos" class="page">
-        <div class="container">
-            <h2 class="section-title">🏪 sebos parceiros</h2>
-            <div id="sebos-lista" class="books-grid"></div>
-        </div>
-    </div>
-
-    <div id="page-perfil" class="page">
-        <div class="container">
-            <h2 class="section-title">👤 meu perfil</h2>
-            <div class="book-card">
-                <div class="book-title">Ana Leitora</div>
-                <div class="book-author">@ana_leitora</div>
-                <div class="book-price">📧 ana@bookcycle.com</div>
-                <div class="book-author">📚 livros lidos: 47</div>
-                <div class="book-author">⭐ avaliação: 4.8</div>
-                <span class="badge">membro desde 2024</span>
-                <span class="badge">leitora voraz</span>
+          <section class="filter-section">
+            <h2 class="filter-title">Preço</h2>
+            <div class="filter-chips">
+              <button class="chip filter-price" type="button" data-preco="ate30">até R$ 30</button>
+              <button class="chip filter-price" type="button" data-preco="30a50">R$ 30 - R$ 50</button>
+              <button class="chip filter-price" type="button" data-preco="50a80">R$ 50 - R$ 80</button>
+              <button class="chip filter-price" type="button" data-preco="acima80">acima de R$ 80</button>
             </div>
-            <h2 class="section-title">⭐ obras favoritas</h2>
-            <div class="books-grid">
-                <div class="book-card"><div class="book-title">Dom Casmurro</div><div class="book-author">Machado de Assis</div></div>
-                <div class="book-card"><div class="book-title">O Alquimista</div><div class="book-author">Paulo Coelho</div></div>
+          </section>
+
+          <section class="filter-section">
+            <h2 class="filter-title">Promoções</h2>
+            <div class="filter-chips">
+              <button class="chip filter-promo active" type="button" data-promo="todos">todos</button>
+              <button class="chip filter-promo" type="button" data-promo="comdesconto">com 50% OFF</button>
+              <button class="chip filter-promo" type="button" data-promo="semdesconto">preço normal</button>
             </div>
+          </section>
+        </aside>
+
+        <section class="content-area" aria-labelledby="livros-title">
+          <h1 id="livros-title" class="section-title">catálogo de livros <span class="title-detail">(37 livros - 30 com 50% OFF)</span></h1>
+          <div id="livros-lista" class="books-grid"></div>
+          <button id="loadMoreBtn" class="load-more-btn" type="button">Carregar mais livros</button>
+        </section>
+      </div>
+    </section>
+
+    <section id="favoritos" class="page" aria-labelledby="favoritos-title">
+      <div class="container">
+        <h1 id="favoritos-title" class="section-title">meus livros favoritos <span id="favoritos-count" class="favorite-count">0</span></h1>
+        <div id="favoritos-lista" class="books-grid"></div>
+      </div>
+    </section>
+
+    <section id="reservas" class="page" aria-labelledby="reservas-title">
+      <div class="container">
+        <h1 id="reservas-title" class="section-title">minhas reservas</h1>
+        <div id="reservas-lista" class="books-grid"></div>
+      </div>
+    </section>
+
+    <section id="sebos" class="page" aria-labelledby="sebos-title">
+      <div class="container">
+        <h1 id="sebos-title" class="section-title">sebos parceiros</h1>
+        <div id="sebos-lista" class="books-grid"></div>
+      </div>
+    </section>
+
+    <section id="perfil" class="page" aria-labelledby="perfil-title">
+      <div class="container">
+        <h1 id="perfil-title" class="section-title">meu perfil</h1>
+        <article class="book-card">
+          <h2 class="book-title">Ana Leitora</h2>
+          <p class="book-author">@ana_leitora</p>
+          <p class="book-price">ana@bookcycle.com</p>
+          <p class="book-author">livros lidos: 47</p>
+          <p class="book-author">avaliação: 4.8</p>
+          <span class="badge">membro desde 2024</span>
+          <span class="badge">leitora voraz</span>
+        </article>
+
+        <h2 class="section-title">obras favoritas</h2>
+        <div class="books-grid">
+          <article class="book-card">
+            <h3 class="book-title">Dom Casmurro</h3>
+            <p class="book-author">Machado de Assis</p>
+          </article>
+          <article class="book-card">
+            <h3 class="book-title">O Alquimista</h3>
+            <p class="book-author">Paulo Coelho</p>
+          </article>
         </div>
-    </div>
+      </div>
+    </section>
 
-    <div id="page-sobre" class="page">
-        <div class="container">
-            <h2 class="section-title">📖 sobre nós</h2>
-            <div class="book-card">
-                <p style="margin-bottom:1rem"><strong>BOOKCYCLE</strong> - Conectando leitores e sebos</p>
-                <p style="margin-bottom:1rem">Uma plataforma dedicada a promover a cultura da leitura, conectando amantes de livros a sebos parceiros. Aqui você encontra livros novos e usados com até 50% de desconto!</p>
-                <p style="margin-bottom:0.5rem">✨ <em>"Um livro é um sonho que você segura na mão." - Neil Gaiman</em></p>
-                <p>📧 bookcycle@outlook.com | 📞 (11) 9885-7362</p>
-            </div>
-        </div>
-    </div>
+    <section id="sobre" class="page" aria-labelledby="sobre-title">
+      <div class="container">
+        <h1 id="sobre-title" class="section-title">sobre nós</h1>
+        <article class="book-card text-card">
+          <h2>BOOKCYCLE - Conectando leitores e sebos</h2>
+          <p>Uma plataforma dedicada a promover a cultura da leitura, conectando amantes de livros a sebos parceiros. Aqui você encontra livros novos e usados com até 50% de desconto.</p>
+          <p><em>"Um livro é um sonho que você segura na mão." - Neil Gaiman</em></p>
+          <p>bookcycle@outlook.com | (11) 9885-7362</p>
+        </article>
+      </div>
+    </section>
+  </main>
 
-    <footer class="footer">
-        <p>📖 <strong>BOOKCYCLE</strong> - Sua plataforma de troca e venda de livros</p>
-        <p>📧 bookcycle@outlook.com | 📞 (11) 9885-7362</p>
-        <p>© 2024 BookCycle - Todos os direitos reservados</p>
-    </footer>
-
-    <script src="script.js"></script>
+  <footer class="footer">
+    <p><strong>BOOKCYCLE</strong> - Sua plataforma de troca e venda de livros</p>
+    <p>bookcycle@outlook.com | (11) 9885-7362</p>
+    <p>&copy; 2024 BookCycle - Todos os direitos reservados</p>
+  </footer>
 </body>
 </html>
