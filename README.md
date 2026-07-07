@@ -35,19 +35,3 @@ O banco de dados `bookcycle` é composto por 5 tabelas principais, estruturadas 
 3. **`livros`**: Catálogo de obras disponíveis, diretamente vinculado ao sebo detentor do título (`id_sebo`).
 4. **`reservas`**: Tabela de relacionamento que une o usuário, o sebo e o livro, monitorando o prazo e o status da reserva.
 5. **`funcionarios`**: Controle de equipe interna responsável pelo suporte e operação do ecossistema.
-
----
-
-## 💻 Como Rodar o Projeto Localmente
-
-### Pré-requisitos
-Antes de começar, você vai precisar ter instalado em sua máquina:
-- [Visual Studio Code](https://code.visualstudio.com/)
-- Extensão **Live Server** (para rodar a interface web)
-- Extensão **MySQL** ou um gerenciador local (XAMPP/phpMyAdmin) para rodar os scripts de banco de dados.
-
-### Passo a Passo
-
-1. **Clonar o repositório:**
-```bash
-   git clone [https://github.com/seu-usuario/bookcycle.git](https://github.com/seu-usuario/bookcycle.git)
